@@ -505,6 +505,8 @@ struct ChrootLinuxDerivationBuilder : ChrootDerivationBuilder, LinuxDerivationBu
         if (mount(0, chrootStoreDir.c_str(), 0, MS_SHARED, 0) == -1)
             throw SysError("unable to make '%s' shared", chrootStoreDir);
 
+        (void)umount("/proc/sys/fs/binfmt_misc");
+
         /* Set up a nearly empty /dev, unless the user asked to
            bind-mount the host /dev. */
         Strings ss;
